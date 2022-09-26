@@ -1,0 +1,53 @@
+
+.modal {
+  position: fixed;
+  top: 30vh;
+  left: 10%;
+  width: 10%;
+  z-index: 100;
+  overflow: hidden;
+  border-radius: 25px;
+  background-image: -webkit-repeating-linear-gradient();
+ 
+}
+
+.header {
+  background: #ebebebe3;
+  border-radius: 25px;
+  padding: 1rem;
+  text-align: right;
+  background-image:url(https://content.staffsante.fr/wp-content/uploads/2011/09/CV.jpg);
+  
+}
+
+.header h4  {
+  flex: content;
+  margin: 0;
+  text-align: left;
+  color: rgb(255, 255, 255);
+  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  
+  
+}
+.header:hover{
+  color: black;
+
+}
+
+.content {
+  padding: 1rem;
+  text-align: left;
+}
+
+
+.actions {
+  
+  align-self: start;
+}
+
+@media (min-width: 200px) {
+  .modal {
+    left: calc(50% - 20rem);
+    width: 20rem;
+  }
+}
