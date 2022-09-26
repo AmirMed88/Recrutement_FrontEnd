@@ -92,6 +92,7 @@ const JobForm=()=>{
   axios.post('http://localhost:8080/api/job/addJob',
   {location:location,company:company,position:position,level:level,contract:contract,postedAt:postedAt,logo:`./images/`+selectedImage.name,languages:personName},config).then((response) => {
       console.log('job added')
+      window.location.reload();
 
     });
   }
