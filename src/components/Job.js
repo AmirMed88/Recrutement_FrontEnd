@@ -71,10 +71,10 @@ function Job() {
        { filters.map(filter => <FilterItem item={filter} _callback={removeFilter} key={filter} />)}
      </div>
      <div className="card" style={{padding:10,fontFamily:'monospace'}}>
-      
-       {searchv?<div>
+     { listings.map(listing => <JobCard style={{height:"10"}} listing={listing} key={listing.id} filtering={filterJobs} />) }
+       {/* {searchv?<div>
         { newlistings.map(listing => <JobCard style={{height:"10"}} listing={listing} key={listing.id} filtering={filterJobs} />) }     
-       </div> : <div>{ listings.map(listing => <JobCard style={{height:"10"}} listing={listing} key={listing.id} filtering={filterJobs} />) }</div>}
+       </div> : <div>{ listings.map(listing => <JobCard style={{height:"10"}} listing={listing} key={listing.id} filtering={filterJobs} />) }</div>} */}
      </div>
     
     
