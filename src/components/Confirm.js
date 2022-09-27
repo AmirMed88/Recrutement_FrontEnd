@@ -6,24 +6,25 @@ import { Grid, List, ListItem, ListItemText, TableContainer } from '@material-ui
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
 import { Container } from 'react-bootstrap';
+import html2PDF from 'jspdf-html2canvas';
+function Confirm(props) {
 
-function Confirm (props) {
-
-  const[values,setValues]=useState(props.values);
- const continueHandler=(e)=> {
+  const [values, setValues] = useState(props.values);
+  const continueHandler = (e) => {
     e.preventDefault();
     // PROCESS FORM //
 
     const config = {
-          headers: { 
-              Authorization: `Bearer ${localStorage.getItem('token')}` }
-              
-      };
-      axios.post('http://localhost:8080/api/profile/addProfile',
-      {skills:props.values.skills.split(','),contact:{fullname:props.values.fullName,address:props.values.address,email:props.values.email,phone:props.values.phone},experiences:[{workExp:props.values.wexperience,academicExp:props.values.aexperience,started:props.values.started,ended:props.values.ended}],educations:[{content:props.values.education, achievement:props.values.achievement}]},config).then((response) => {
-          console.log('this is contact')
-          console.log('this is values',props.values)
-        });
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+      }
+
+    };
+    axios.post('http://localhost:8080/api/profile/addProfile',
+      { skills: props.values.skills.split(','), contact: { fullname: props.values.fullName, address: props.values.address, email: props.values.email, phone: props.values.phone }, experiences: [{ workExp: props.values.wexperience, academicExp: props.values.aexperience, started: props.values.started, ended: props.values.ended }], educations: [{ content: props.values.education, achievement: props.values.achievement }] }, config).then((response) => {
+        console.log('this is contact')
+        console.log('this is values', props.values)
+      });
 
     props.nextStep();
   };
@@ -32,41 +33,57 @@ function Confirm (props) {
     e.preventDefault();
     props.prevStep();
   };
-console.log(values);
-console.log(props.values);
-  
-    // const {
-    //   values: { fullName, address, email,phone, experience, education, skills }
-    // } = this.props;
-    return (
-      <MuiThemeProvider>
-        <>
-          <Dialog
-            open
-            fullWidth
-            maxWidth='sm'
-          >
-            <AppBar title="Confirm User Data" />
+  console.log(values);
+  console.log(props.values);
+
+  function printDocument() {
+    let btn = document.getElementById('btn');
+    let page = document.getElementById('page');
+
+    btn.addEventListener('click', function () {
+      html2PDF(page, {
+        jsPDF: {
+          format: 'a4',
+        },
+        imageType: 'image/jpeg',
+        output: './pdf/generate.pdf'
+      });
+    });
+  }
+
+  // const {
+  //   values: { fullName, address, email,phone, experience, education, skills }
+  // } = this.props;
+  return (
+    <MuiThemeProvider>
+      <>
+        <Dialog
+          open
+          fullWidth
+          maxWidth='sm'
+        >
+          <AppBar title="Confirm User Data" />
+          <div id="page">
             <List>
               <Container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 100 }}>
-              <Grid xs={8}>
-              <ListItem>
-                <ListItemText primary="Full name" secondary={props.values.fullName} />
-              </ListItem>
-              <ListItem>
-                <ListItemText primary="Address" secondary={props.values.address} />
-              </ListItem>
-              <ListItem>
-                <ListItemText primary="Email" secondary={props.values.email} />
-              </ListItem>
-              <ListItem>
-                <ListItemText primary="Phone" secondary={props.values.phone} />
-              </ListItem>
+                <Grid xs={8}>
+                  <ListItem>
+                    <ListItemText primary="Full name" secondary={props.values.fullName} />
+                  </ListItem>
+                  <ListItem>
+                    <ListItemText primary="Address" secondary={props.values.address} />
+                  </ListItem>
+                  <ListItem>
+                    <ListItemText primary="Email" secondary={props.values.email} />
+                  </ListItem>
+                  <ListItem>
+                    <ListItemText primary="Phone" secondary={props.values.phone} />
+                  </ListItem>
 
-              </Grid>
+                </Grid>
               </Container>
-              
-              <hr/>
+
+              <hr />
 
               <ListItem>
                 <ListItemText primary="Work Experience" secondary={props.values.wexperience} />
@@ -80,7 +97,7 @@ console.log(props.values);
               <ListItem>
                 <ListItemText primary="Date Experience" secondary={props.values.ended} />
               </ListItem>
-              
+
               <ListItem>
                 <ListItemText primary="Education" secondary={props.values.education} />
               </ListItem>
@@ -89,34 +106,36 @@ console.log(props.values);
                 <ListItemText primary="Skills" secondary={props.values.skills} />
               </ListItem>
             </List>
-            <br />
-            <Grid item xs={6}>
+          </div>
+          <br />
+          <Grid item xs={6}>
             <Button
               color=""
               variant="contained"
               onClick={back}
             >Back</Button>
 
-            </Grid>
+          </Grid>
 
-            <Grid item xs={6}>
+          <Grid item xs={6}>
             <Button
-            style={{backgroundColor:'orange'}}
+              style={{ backgroundColor: 'orange' }}
               color='secondary'
               variant="contained"
               onClick={continueHandler}
             >Confirm & Continue</Button>
 
-            </Grid>
+          </Grid>
+          <button id="btn" onClick={printDocument}>Generate</button>
 
-            
 
-           
-          </Dialog>
-        </>
-      </MuiThemeProvider>
-    );
-  }
+
+
+        </Dialog>
+      </>
+    </MuiThemeProvider>
+  );
+}
 
 
 export default Confirm;

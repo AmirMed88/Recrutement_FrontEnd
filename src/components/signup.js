@@ -20,6 +20,8 @@ const Signup = () => {
     const [admin, setAdmin] = useState('');
     const [user, setUser] = useState('');
     const [error, setError] = useState('');
+    const [userRole, setUserRole] = useState('user');
+    const [adminRole, setAdminRole] = useState('admin');
 
     const signupHandler = () => {
         const requestOptions = {
@@ -28,7 +30,7 @@ const Signup = () => {
             body: JSON.stringify({
                 username: enteredlogin,
                 password: enteredpwd,
-                role: ["ROLE_ADMIN", "ROLE_USER"]
+                role: [adminRole]
             })
         };
         window.token = "";
@@ -118,9 +120,9 @@ const Signup = () => {
 
                     <br></br><br></br>
                     <div>
-                        <input type="radio" value="ROLE_ADMIN" name="role" onChange={adminHandler} /> Admin
+                        <input type="radio" value={adminRole} name="role" onChange={adminHandler} /> Admin
                         {'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}
-                        <input type="radio" value="ROLE_USER" name="role" onChange={userHandler} /> User
+                        <input type="radio" value={userRole} name="role" onChange={userHandler} /> User
 
                     </div>
                     <br></br><br></br>

@@ -5,7 +5,10 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 
+  import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
+
+
 const Login=()=>{
 
     const paperStyle={padding :20,height:'50vh',width:280, margin:"20px auto"}
@@ -32,8 +35,11 @@ const Login=()=>{
                     throw Error(response.statusText);
                 }
                 return response.json();
+                
             })
             .then(data => {
+                
+                alert('logged in sucessfully')
                 localStorage.setItem('token', data.token);
                 if(data.roles.includes('ROLE_ADMIN')){
                     navigate('/cv');

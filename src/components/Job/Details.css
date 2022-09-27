@@ -1,0 +1,16 @@
+.cont{
+    display: flex;
+    justify-content:space-around;
+}
+.skill{
+
+    border-radius: 10;
+    width: 500;
+    height: 450;
+    transform: 'translateZ(0)';
+}
+
+.button{
+    display: flex;
+    justify-content: flex-end;
+}

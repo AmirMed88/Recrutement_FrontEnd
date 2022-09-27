@@ -123,8 +123,8 @@ const JobForm=()=>{
     <div>
       <Paper style={paperStyle}>
 
-          <Button variant="contained" color="success" type="button" onClick={handleClick}>
-                {show ? 'Create a Post' : 'Post Creation'}
+          <Button variant="contained" style={{ backgroundColor:"orange"}} type="button" onClick={handleClick}>
+                {expanded ? 'Create a Post' : 'Post Creation'}
             </Button>
             <ExpandMore
                     expand={expanded}
@@ -143,7 +143,7 @@ const JobForm=()=>{
                     
                     <h5 className='am' style={{postion:"relative", justifyContent:"center",color:"black"}}>Add a Job/Internship</h5>
                            
-                              <div style={{ mt: 100, width: 300, mb:100 }}>
+                              <div style={{ mt: 100, mb:100 }}>
                                 {/* <label htmlFor="position" style={{color:"black",mt: 100, width: 300, mb:100}}>           position  :     </label> */}
                             <TextField fullWidth label="position" placeholder="enter a position" value={position} id="position" type="text" pattern="[0-9]*"    style={{backgroundColor:"white",mt: 100, mb:100,fontFamily: "Arial"   }} onChange={(event)=>{setPosition(event.target.value)}} /></div>  
                               <div style={{xs:6}}>

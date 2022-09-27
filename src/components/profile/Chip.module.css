@@ -41,8 +41,13 @@
 
 
 .actions {
+ align-items: baseline;
   
-  align-self: start;
+}
+.delete{
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
 }
 
 @media (min-width: 200px) {

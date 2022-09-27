@@ -1,6 +1,19 @@
 .card{
-    background-image: url(https://media-exp1.licdn.com/dms/image/C4E1BAQFHrYklf2QJiw/company-background_10000/0/1585915033296?e=2147483647&v=beta&t=oFTZHRgi66xfR9wRoaREaFIcbs93MpGwys5RhgcPeBg);
-    margin-top: 10;
-    height:'70vh';
+    background-image: url(https://t3.ftcdn.net/jpg/02/39/98/48/360_F_239984893_m8NmN3aTbmBwWgMfN0VqCl5gaQxoAP6n.jpg);
+    
+    height:'2vh';
     width:800;
   }
+  .image{
+    border-radius: 10;
+    
+  }
+  .detail{
+    display: flex;
+   align-items: flex-end;
+    
+  }
+  .cont{
+    display: flex;
+   
+    margin-bottom: auto;}
