@@ -3,7 +3,7 @@ import Card from './Card';
 import Button from './Button';
 import classes from './Chip.module.css';
 import axios from 'axios';
-import { Collapse, styled, TextField, Typography } from '@material-ui/core';
+import { Collapse, Input, styled, TextField, Typography } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -11,7 +11,8 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ModifyProfile from './ModifyProfile';
-
+import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 
 
 
@@ -27,11 +28,21 @@ const ExpandMore = styled((props) => {
         duration: theme.transitions.duration.shortest,
     }),
 }));
+
+const styles = {
+    fontFamily: 'sans-serif',
+    textAlign: 'center',
+    display: 'flex',
+};
+
 const ChipProfile = (props) => {
 
     // const [cont,setCont]=useState([]);
     // const [contactdata,setContactData]=useState([]);
     const [expanded, setExpanded] = React.useState(false);
+    const [file, setFile] = React.useState(false);
+
+    const [download, setDownload] = React.useState(false);
     const handleExpandClick = () => {
         setExpanded(!expanded);
     };
@@ -53,27 +64,27 @@ const ChipProfile = (props) => {
     const SendMail = () => {
         var username = 'amir.mohamed@esprit.tn'; var password = 'evgmlhdhrstqxavd';
         var credentials = btoa(username + ':' + password)
-        
+
         const config = {
-               
+
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`,
                 smtp: {
                     username: 'amir.mohamed@esprit.tn',
                     password: 'evgmlhdhrstqxavd',
                     host: "smtp.gmail.com",
-                    
+
                     port: 587
-    
+
                 },
-                
+
                 credentials: true,
                 withCredentials: true,
             },
-            
-            
+
+
         };
-        axios.post('http://localhost:8080/api/profile/sendMail?email='+ props.profile.contact?.email,{username,password,credentials}, config).then((response) => {
+        axios.post('http://localhost:8080/api/profile/sendMail?email=' + props.profile.contact?.email, { username, password, credentials }, config).then((response) => {
 
             console.log('sent successfully')
 
@@ -126,9 +137,55 @@ const ChipProfile = (props) => {
             // console.log('this is d',{contactdata});
 
         }
+
+
     )
     console.log('this is contact', props.profile?.experiences);
     console.log('this is skills', props.profile.skill);
+
+    function submitFile() {
+        let formData = new FormData();
+        formData.append('file', file);
+        formData.append('id', props.profile.idProfile);
+        console.log('>> formData >> ', formData);
+
+        // You should have a server side REST API 
+        axios.post('http://localhost:8080/upload',
+            formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+        }
+        ).then(function () {
+            console.log('SUCCESS!!');
+        })
+            .catch(function () {
+                console.log('FAILURE!!');
+            });
+    }
+
+    function getFile() {
+
+        const config = {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+            }
+        };
+        axios.get('http://localhost:8080/download/' + props.profile.attachment?.id, config).then((response) => {
+            setDownload(response.data);
+
+            console.log('download', response.data)
+        });
+
+
+
+    }
+    function handleFileUpload(event) {
+
+        setFile(event.target.files[0]);
+        console.log('>>>> 1st element in files array >>>> ', file);
+    }
 
 
     //  console.log('this is fullname',data.fullname);
@@ -155,14 +212,30 @@ const ChipProfile = (props) => {
                 </ExpandMore>
 
                 <Collapse in={expanded} timeout="auto" unmountOnExit>
+                    <div  style={styles}>
+                    <CloudDownloadIcon onClick={submitFile}>Attach</CloudDownloadIcon>
+                        <label className="custom-file-upload">
+                        
+                            <input type="file" id="input" onChange={handleFileUpload} />
+                           
+                        </label>
+                        
+                        {/* <Button onClick={submitFile}>Submit</Button> */}
+                    </div>
+
+                    <div>
+                {/* <CloudUploadIcon onClick={getFile}>download</CloudUploadIcon>
+                <img src={download}/> */}
+                
+                </div>
 
                     <div className={classes.content}>
                         {/* <Typography>{props.profile.createdAt}</Typography> */}
                         {props.profile.experiences?.map((ex, index) => (
                             <div key={index} >
                                 Experience :
-                                {ex.workExp ? <Typography>{ex.workExp} •• IN {ex.started}  </Typography> : <Typography style={{color:'red'}}>Please fill your work Experience</Typography>}
-                                {ex.academicExp ? <Typography>{ex.academicExp} •• IN {ex.ended} </Typography> : <Typography style={{color:'red'}}>Please fill your academic Experience</Typography>}
+                                {ex.workExp ? <Typography>{ex.workExp} •• IN {ex.started}  </Typography> : <Typography style={{ color: 'red' }}>Please fill your work Experience</Typography>}
+                                {ex.academicExp ? <Typography>{ex.academicExp} •• IN {ex.ended} </Typography> : <Typography style={{ color: 'red' }}>Please fill your academic Experience</Typography>}
 
                             </div>
 

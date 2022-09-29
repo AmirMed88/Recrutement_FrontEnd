@@ -4,7 +4,7 @@ import Search from './Search'
 
 function Header() {
     return (
-        <div className="py-4 relative h-32 cyan">
+        <div className="py-4 relative h-32 yellow">
             {/* <img src={headerImg}  /> */}
             <Search/>
         </div>

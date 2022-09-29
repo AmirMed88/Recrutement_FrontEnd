@@ -1,7 +1,8 @@
 import { Button, Grid, GridList, Typography } from '@material-ui/core'
-import React from 'react'
+import React, { useState } from 'react'
 import axios from 'axios'
 import './Details.css'
+import { SettingsSystemDaydream } from '@material-ui/icons'
 function Details({ 
     id,
     company, 
@@ -15,14 +16,18 @@ function Details({
     tools,
     filter_f
  }) {
+
+    const [day,setDay]=useState('');
     function handleClick(skill){
         filter_f(skill)
     }
 
+
+
     const Skills = ({skill}) => (<div className="tag rounded-md p-1 px-2 m-2">
-        <button onClick={() => handleClick(skill)}>
+        <Button onClick={() => handleClick(skill)}>
             {skill}
-        </button>
+        </Button>
         </div>)
 
         function deleteJob(){
@@ -40,6 +45,21 @@ function Details({
         
 
         }
+
+        function ExpenseDate(postedAt) {
+            const month = postedAt.toLocaleString("en-US", { month: "long" });
+            const day = postedAt.toLocaleString("en-US", { day: "2-digit" });
+            const year = postedAt.getFullYear();
+            setDay(day);
+            
+              return (
+                 <div>
+                  <div>{month}</div>
+                <div>{day}</div>
+                <div>{year}</div>
+                </div>
+              )
+            }
         
     return (
         <>
@@ -53,9 +73,10 @@ function Details({
             </div>
             
             <div className="" style={{color:"black"}}>
-                <Typography className="text-gray-400">{postedAt}</Typography>
+                <Typography className="text-gray-400">{postedAt.toLocaleString("en-US", { day: "2-digit" })}</Typography>
                 <Typography className="text-gray-400">contract: {contract}</Typography>
                 <Typography className="text-gray-400">location: {location}</Typography>
+               
             </div>
         </div>
         <Grid >
@@ -66,6 +87,7 @@ function Details({
             </GridList>
           
         </Grid>
+        <Button style={{marginleft:"12"}} type='submit' onClick={deleteJob}>X</Button>
        
         </>
     )

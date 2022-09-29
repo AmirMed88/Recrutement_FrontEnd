@@ -1,24 +1,25 @@
-import React, { useEffect,useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Grid,Paper, Avatar, TextField, Button, Typography,Link } from '@material-ui/core/'
+import { Grid, Paper, Avatar, TextField, Button, Typography, Link, Snackbar } from '@material-ui/core/'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 
-  import 'react-toastify/dist/ReactToastify.css';
+import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 
 
-const Login=()=>{
+const Login = () => {
 
-    const paperStyle={padding :20,height:'50vh',width:280, margin:"20px auto"}
-    const avatarStyle={backgroundColor:'#1bbd7e'}
-    const btnstyle={margin:'8px 0'}
+    const paperStyle = { padding: 20, height: '50vh', width: 280, margin: "20px auto" }
+    const avatarStyle = { backgroundColor: '#1bbd7e' }
+    const btnstyle = { margin: '8px 0' }
     const [enteredlogin, setEnteredlogin] = useState('');
     const [enteredpwd, setEnteredpwd] = useState('');
     const navigate = useNavigate();
+    const [loggedIn, setloggedIn] = useState('');
 
-    const Authhandler =()=>{
+    const Authhandler = () => {
 
         const requestOptions = {
             method: 'POST',
@@ -35,29 +36,45 @@ const Login=()=>{
                     throw Error(response.statusText);
                 }
                 return response.json();
-                
+
             })
             .then(data => {
-                
+                // return (
+                //     <Snackbar
+                //         sx={{
+                //             width: 400,
+                //             color: "secondary",
+                //             message:"hello"
+                //             //backgroundColor: "green", This doesn't work
+                //             // "& .MuiSnackbarContent-root": { backgroundColor: "green" }
+                //         }}
+                //         />
+                    
+                // )
                 alert('logged in sucessfully')
                 localStorage.setItem('token', data.token);
-                if(data.roles.includes('ROLE_ADMIN')){
+                
+                if (data.roles.includes('ROLE_ADMIN')) {
+                    
                     navigate('/cv');
                     console.log('admin')
-                    
-                }else if(data.roles.includes('ROLE_USER')){
+
+                } else if (data.roles.includes('ROLE_USER')) {
                     // history.push('/MenuUser')}
                     console.log('user')
                     navigate('/cv');
-                
-            }})
+
+                }
+               
+            })
 
 
 
 
-            
+
             .catch(function () {
                 console.log("error")
+                
                 return;
             });
 
@@ -66,11 +83,11 @@ const Login=()=>{
         // const config = {
         //     headers: { Authorization: `Bearer ${token}` }
         // };
-        
+
         // const bodyParameters = {
         //    key: "value"
         // };
-        
+
         // axios.post( 
         //     "http://localhost:8081/api/auth/signin",
         //   bodyParameters,
@@ -89,7 +106,7 @@ const Login=()=>{
         //        .then((res) => {
         //          console.log(res);
         //        })
-    
+
         // })
     }
     const loginChangeHandler = (event) => {
@@ -99,16 +116,17 @@ const Login=()=>{
         setEnteredpwd(event.target.value);
     };
 
-    
-    return(
+
+    return (
         <Grid>
             <Paper elevation={10} style={paperStyle}>
+            
                 <Grid align='center'>
-                     <Avatar style={avatarStyle}><LockOutlinedIcon/></Avatar>
-                    <h2 style={{fontFamily: "Arial"}}>Sign In</h2>
+                    <Avatar style={avatarStyle}><LockOutlinedIcon /></Avatar>
+                    <h2 style={{ fontFamily: "Arial" }}>Sign In</h2>
                 </Grid>
-                <TextField label='Username' value={enteredlogin} onChange={loginChangeHandler} placeholder='Enter username' fullWidth required/>
-                <TextField label='Password' value={enteredpwd}  onChange={pwdChangeHandler} placeholder='Enter password' type='password' fullWidth required/>
+                <TextField label='Username' value={enteredlogin} onChange={loginChangeHandler} placeholder='Enter username' fullWidth required />
+                <TextField label='Password' value={enteredpwd} onChange={pwdChangeHandler} placeholder='Enter password' type='password' fullWidth required />
                 {/* <FormControlLabel
                     control={
                     <Checkbox
@@ -124,10 +142,10 @@ const Login=()=>{
                         Forgot password ?
                 </Link>
                 </Typography> */}
-                <Typography style={{fontFamily: "Arial"}} > Do you have an account ?
-                     <Link href="/signup" style={{fontFamily: "Arial"}} >
-                        Sign Up 
-                </Link>
+                <Typography style={{ fontFamily: "Arial" }} > Do you have an account ?
+                    <Link href="/signup" style={{ fontFamily: "Arial" }} >
+                        Sign Up
+                    </Link>
                 </Typography>
             </Paper>
         </Grid>

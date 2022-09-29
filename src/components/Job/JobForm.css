@@ -1,3 +1,16 @@
 .job{
     background-image: url(https://pod.uphf.fr/media/files/c5fa34aea46d022da8ad44490580d5a7c59d8da1d43f801e5789e6614321b146/visuel-chaine-stage-job-emploi.png);
 }
+/* input[type="file"] {
+    display:contents;
+  } */
+  .custom-file-upload {
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+  }
+  
+  .file-preview {
+  margin: 0 10px;
+  }

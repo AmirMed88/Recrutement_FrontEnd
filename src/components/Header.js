@@ -16,7 +16,7 @@ import Sidebar from './sidebar/Sidebar';
 import NewSidebar from './sidebar/NewSidebar';
 import { useState } from 'react';
 import {
-  
+
   CssBaseline,
   Divider,
   Drawer,
@@ -42,39 +42,43 @@ const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 
 const Header = () => {
-  const btnstyle={margin:'8px 0',position: 'absolute', right: 0 ,backgroundColor:'orange',color:"white",'hover': {
-    backgroundColor:'white',
-}}
-const btnstyle2={margin:'8px 0',position: 'absolute', right: 100,backgroundColor:'black',color:"white",'hover': {
-  backgroundColor:'white',
-}}
-  
+  const btnstyle = {
+    margin: '8px 0', position: 'absolute', right: 0, backgroundColor: 'orange', color: "white", 'hover': {
+      backgroundColor: 'white',
+    }
+  }
+  const btnstyle2 = {
+    margin: '8px 0', position: 'absolute', right: 100, backgroundColor: 'black', color: "white", 'hover': {
+      backgroundColor: 'white',
+    }
+  }
+
   const [open, setOpen] = useState(false);
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
-  
+
 
 
 
   //////////////////////////////////////////////////////////////////////
 
-  
+
 
   return (
-    
-    <AppBar   style={{ background: "#E7E194" ,top:"0" }}>
+
+    <AppBar style={{ background: "#E7E194", top: "0" }}>
       <Container fluid >
-      
+
         <Toolbar >
-        
-        
-          <NewSidebar/>
+
+
+          <NewSidebar />
 
           <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
-          <Typography 
-            style={{fontFamily: "Arial",color:"#FFFFFF"}}
+          <Typography
+            style={{ fontFamily: "Arial", color: "#FFFFFF" }}
             variant="h6"
             noWrap
             component="a"
@@ -92,14 +96,18 @@ const btnstyle2={margin:'8px 0',position: 'absolute', right: 100,backgroundColor
           >
             RECRUTE
           </Typography>
-          <Button type='submit' href='/' color='primary' variant="contained" style={btnstyle}  >Disconnect </Button>
-          <Button type='submit' href='/' color='primary' variant="contained" style={btnstyle2}  >login </Button>
-        
-          
+          <Button type='submit' href='/' color='primary' variant="contained" style={btnstyle} onClick={()=>localStorage.clear()}  >Disconnect </Button>
+          {localStorage.getItem('token') ? <Avatar googleId="118096717852922241760" size="100" round={true} style={btnstyle2} src="http://www.gravatar.com/avatar/a16a38cdfe8b2cbd38e8a56ab93238d3" />
+            :
+            <Button type='submit' href='/' color='primary' variant="contained" style={btnstyle2}  >login </Button>}
+           
 
-          
+
+
+
+
         </Toolbar>
-         
+
       </Container>
     </AppBar>
   );
